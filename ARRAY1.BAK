@@ -1,0 +1,219 @@
+#include<stdio.h>
+#include<conio.h>
+#define SIZE 100
+void display(int[],int);
+void insertlast(int[],int *,int);
+void insertfirst(int[],int*,int);
+void insertmiddle(int[],int *,int,int);
+void insertafter(int[],int *,int,int);
+void insertbefore(int[],int *,int,int);
+void deletelast(int[],int *);
+void deletefirst(int[],int *);
+void deletemiddle(int[],int *,int);
+void main()
+{  int arr[SIZE],n=0,v,p,op;
+    do
+    {
+ clrscr();
+   printf("\n\t 0.Exit");
+   printf("\n\t 1.Display");
+   printf("\n\t 2.insert at last");
+   printf("\n\t 3.insert at first");
+   printf("\n\t 4.insert at middle");
+   printf("\n\t 5.insert the after");
+   printf("\n\t 6.insert before");
+   printf("\n\t 7.delete last");
+   printf("\n\t 8.delete first");
+   printf("\n\t 9.delete middle");
+   printf("\n\t 10.delete after");
+   printf("\n\n\t enter your choice:");
+   scanf("%d",&op);
+   clrscr();
+     switch(op)
+     {  case 0:
+	   printf("thanks");
+	      break;
+     case 1: display(arr,n);
+	     break;
+      case 2: printf("\n\t enter value to insert");
+	 scanf("%d",&v);
+	 insertlast(arr,&n,v);
+	 break;
+	 case 3: printf("\n\t enter value to insert");
+	 scanf("%d",&v);
+	 insertfirst(arr,&n,v);
+	 break;
+	 case 4:printf("\n\t enter the position");
+	 scanf("%d",&p);
+	  printf("\n\t enter the value");
+	  scanf("%d",&v);
+	  insertmiddle(arr,&n,v,p);
+	  break;
+      case 5:printf("\n\t enter the value insert");
+	 scanf("%d",&v);
+	  printf("\n\t enter the valve after");
+	  scanf("%d",&p);
+	  insertafter(arr,&n,v,p);
+	  break;
+      case 6:printf("\n\t enter the value insert");
+	 scanf("%d",&v);
+	  printf("\n\t enter the value before");
+	  scanf("%d",&p);
+	  insertbefore(arr,&n,v,p);
+	  break;
+      case 7:deletelast(arr,&n);
+	    break;
+      case 8:deletefirst(arr,&n);
+	    break;
+      case 9:printf("enter position to delete");
+	   scanf("%d",&p);
+      deletemiddle(arr,&n,p);
+	 break;
+       default:
+       printf("invalid input");
+       }
+       printf("\n\n\t press any key to continue...");
+       getch();
+       }
+       while(op!=0) ;
+      }
+ void deletemiddle(int a[],int *n,int p)
+      {
+       int i;
+		if(*n==0)
+	{ printf("array empty");
+	  return;
+	} if(p>*n)
+	  {
+	    printf("position not found");
+		 return;
+	    }
+	  for(i=p-1;i<(*n)-1;i++)
+	    a[i]=a[i+1];
+	     (*n)--;
+	     printf("deleted successfully");
+	   }
+
+      void deletefirst(int a[],int *n)
+      { 	int i;
+	if(*n==0)
+	{ printf("array empty");
+	  return;
+	}
+	  for(i=0;i<(*n)-1;i++)
+	    a[i]=a[i+1];
+	     (*n)--;
+	     printf("deleted successfully");
+	   }
+
+      void deletelast(int a[],int *n)
+      {   if(*n==0)
+	    {
+	     printf("\n\t array is empty");
+	     return;
+	     }
+	    (*n)--;
+	    printf("\n\t element deleted properly...");
+	    }
+      void insertafter( int a[],int *n,int v,int p)
+      {
+      int i,j=-1;
+      if(*n ==SIZE)
+      { printf("array full");
+	 return;
+	}
+	for(i=0;i<*n;i++)
+	{
+	 if(a[i]==p)
+	 break;
+	}
+	if(i==*n)
+	{
+	printf("\n \t value not found");
+	  return;
+	 }
+	 for(j=*n;j>i+1;j--)
+	 a[j]=a[j-1];
+	 a[j]=v;
+	 (*n)++;
+	 printf("inserted successfully");
+	 }
+	 void insertbefore( int a[],int *n,int v,int p)
+      {
+      int i,j;
+      if(*n ==SIZE)
+      { printf("array full");
+	 return;
+	}
+	for(i=0;i<*n;i++)
+	{
+	 if(a[i]==p)
+	 break;
+	}
+	if(i==*n)
+	{
+	printf("\n \t value not found");
+	  return;
+	 }
+	 for(j=*n;j>i;j--)
+	 a[j]=a[j-1];
+	 a[j]=v;
+	 (*n)++;
+	 printf("inserted successfully");
+	 }
+
+       void insertmiddle(int a[],int *n,int v,int p)
+       {
+	 int i;
+	 if(*n==SIZE)
+	 {
+	  printf("array full");
+	  return;
+	  }
+	  if(p>(*n)+1)
+	  {
+	  printf("position not found");
+	  return;
+	  }
+	  for(i=*n;i>=p-1;i--)
+	    a[i]=a[i-1];
+	    a[p-1]=v;
+	    (*n)++;
+	    printf("inserted successfully");
+	      return;
+	   }
+
+       void insertfirst(int a[],int *n,int v)
+       {	int i;
+	if(*n==SIZE)
+	{ printf("array full");
+	  return;
+	}
+	  for(i=*n;i>0;i--)
+	    a[i]=a[i-1];
+	     a[0]=v;
+	     (*n)++;
+	     printf("inserted successfully");
+	   }
+
+       void insertlast(int a[],int *n,int v)
+       {    if(*n==SIZE)
+	    {
+	     printf("\n\t array is full");
+	     return;
+	     }
+	    a[*n]=v;
+	    (*n)++;
+	    printf("\n\t element inserted properly...");
+	    }
+
+     void display(int a[],int n)
+      {  int i;
+	if(n==0)
+	{  printf("\n\n\t no data found");
+	     return;
+	} printf("\n\t avialable data:");
+	   for(i=0;i<n;i++)
+	   printf("\t%d",a[i]);
+	 }
+
