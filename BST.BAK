@@ -1,0 +1,124 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+typedef struct nodetype
+{
+ int item;
+ struct nodetype *left;
+ struct nodetype *right;
+ }bst;
+void menu();
+void preorder(bst *);
+void postorder(bst *);
+void inorder(bst *);
+void insert(bst **,int);
+
+void main()
+{
+  int v,op;
+   bst *tree;
+   tree=NULL;//empty stack
+    do
+  {
+    menu();
+   printf("\n\n\t enter your choice:");
+   scanf("%d",&op);
+   clrscr();
+     switch(op)
+     {  case 0: printf("thanks \n\n\t visite again...");
+	      break;
+      case 1: printf("\n\t enter value to insert at first...");
+	 scanf("%d",&v);
+	 insert(&tree,v);
+	 break;
+	 case 2: printf("\n\t inorder traversal\n\t");
+	    inorder(tree);
+	 break;
+     case 3:printf("\n\t preorder traversal\n\t");
+	     preorder(tree);
+	     break;
+     case 4:printf("\n\t postorder traversal\n\t");
+	     postorder(tree);
+	     break;
+
+       default:
+       printf("invalid input");
+       }
+       printf("\n\n\t press any key to continue...");
+       getch();
+       }
+       while(op!=0) ;
+      }
+       void menu()
+      {
+	clrscr();
+	printf("\n\n\t 0.exit");
+	printf("\n\n\t 1.insert");
+	printf("\n\n\t 2.inorder");
+	printf("\n\n\t 3.preorder");
+	printf("\n\n\t 4.postorder");
+	printf("\n\n\t 5.searching");
+
+      }
+  void inorder(bst *tree)
+      {
+      if(tree !=NULL)
+       {
+       inorder(tree->left);
+       printf("  %d",tree->item);
+       inorder(tree->right);
+       }
+      }
+  void preorder(bst *tree)
+  {
+      if(tree !=NULL)
+      {
+       printf(" %d",tree->item);
+       preorder(tree->left);
+       preorder(tree->right);
+       }
+      }
+
+     void postorder(bst *tree)
+      {
+	if(tree!=NULL)
+	{
+	  postorder(tree->left);
+	  postorder(tree->right);
+	  printf("  %d",tree->item);
+	  }
+	}
+  void insert(bst **tree,int v)
+  {
+    bst *ptr,*nodeptr,*parentptr;
+    ptr=(bst *)malloc(sizeof(bst));
+    if(ptr==NULL)
+    {
+      printf(" memory not allocated");
+      return;
+      }
+      ptr->item=v;
+      ptr->left=NULL;
+      ptr->right=NULL;
+      if(*tree==NULL)
+	*tree=ptr;
+       else
+	 {
+	    parentptr=NULL;
+	    nodeptr=*tree;
+	    while(nodeptr !=NULL)
+	    {
+	     parentptr=nodeptr;
+	     if(v<nodeptr->item)
+	       nodeptr=nodeptr->left;
+	     else
+		nodeptr=nodeptr->right;
+	       }
+	     if(v<parentptr->item)
+	     parentptr->left=ptr;
+	     else
+	     parentptr->right=ptr;
+
+	     }
+
+	    }
