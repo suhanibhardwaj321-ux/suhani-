@@ -1,0 +1,328 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+typedef struct nodetype
+{
+   int item;
+   struct nodetype *next;
+   }node;
+
+void traverse(node *);
+void traverserev(node *);
+void insertfirst(node **,int);
+void insertlast(node **,int);
+void insertmiddle(node **,int,int);
+void insertafter(node **,int,int);
+void insertbefore(node **,int,int);
+void insertsorted(node **,int);
+void deletefirst(node **);
+void deletelast(node **);
+void deletemiddle(node **,int);
+void deletevalue(node **,int);
+void main()
+{
+   node *head;
+    int v,p,op;
+    head=NULL;
+    do
+    {
+       clrscr();
+       printf("\n\t 0.exit");
+       printf("\n\t 1.inorder traversal");
+       printf("\n\t 2.reverse travel");
+       printf("\n\t 3.insert at begning");
+       printf("\n\t 4.insert at last");
+       printf("\n\t 5.insert at middle");
+       printf("\n\t 6.insert after");
+       printf("\n\t 7.insert before");
+       printf("\n\t 8.insert sorted");
+       printf("\n\t 9.delete first");
+       printf("\n\t 10.delete last");
+       printf("\n\t 11.delete middle");
+       printf("\n\t 12.delete value");
+       printf("\n\n\t enter your choice:");
+       scanf("%d",&op);
+	 clrscr();
+	 switch(op)
+	 {
+	    case 0:
+		printf("thanks");
+		break;
+	    case 1: traverse(head);
+		  break;
+	    case 2:traverserev(head);
+		    break;
+	    case 3:printf("enter value to insert");
+		  scanf("%d",&v);
+		  insertfirst(&head,v);
+		  break;
+	    case 4: printf("enter value to insert");
+		     scanf("%d",&v);
+		     insertlast(&head,v);
+		     break;
+	    case 5: printf(" entrer value to insert");
+		    scanf("%d",&v);
+		    printf("enter position");
+		    scanf("%d",&p);
+		    insertmiddle(&head,v,p);
+		    break;
+	     case 6:printf("enter value to insert");
+		    scanf("%d",&v);
+		    printf("enter after value");
+		    scanf("%d",&p);
+		    insertafter(&head, v,p);
+		    break;
+	      case 7:printf("enter value to insert");
+		    scanf("%d",&v);
+		    printf("enter before value");
+		    scanf("%d",&p);
+		    insertbefore(&head, v,p);
+		    break;
+	      case 8:printf("enter value to insert");
+		    scanf("%d",&v);
+		    insertsorted(&head,v);
+		    break;
+	      case 9:deletefirst(&head);
+		    break;
+	      case 10:deletelast(&head);
+		      break;
+	      case 11:printf("enter the position");
+		      scanf("%d",&p);
+	      deletemiddle(&head,p);
+		     break;
+	      case 12:deletevalue(&head,v);
+		    break;
+
+	      default:
+		    printf("invalid input");
+	     }
+	     printf("\n\n\t press any key to cintinue....");
+	     getch();
+	     }
+	     while(op !=0);
+	 }
+	 void deletevalue(node **head,int v)
+	 {
+	 }
+	 void deletemiddle(node **head,int p)
+	 {
+	    int c=1;
+	    node *tmp,*ptr;
+	    if(*head==NULL)
+	    {
+	       printf("empty list");
+	       return;
+	 }
+    if((*head)->next==NULL)
+	    { if(p>1)
+	       {
+	       printf("position not found");
+	       }
+	     ptr=*head;
+	     *head=NULL;
+	     free(ptr);
+	     printf("item deleted successfully");
+	     return;
+	     }
+	     tmp=*head;
+	  while(c<p-1 && tmp->next !=NULL)
+	  {
+	  tmp=tmp->next;
+	  c++;
+	  }
+	  if(c<p-1)
+	  {
+	  printf("position not found");
+	  return;
+	  }
+	  ptr=tmp->next;
+	  tmp->next=ptr->next;
+	  free(ptr);
+	  printf("item delete successfully");
+	  return;
+
+	 }
+	 void deletelast(node **head)
+	 {
+	   node *ptr,*tmp;
+	   if(head==NULL)
+	   {
+	     printf("empty list");
+	      return;
+	   }
+	   if((*head)->next==NULL)
+	   {
+	    ptr=*head;
+	    *head=NULL;
+	    free(ptr);
+	    printf("item delete successfully");
+	    return;
+	   }
+	   tmp=*head;
+	   while(tmp->next->next !=NULL)
+	     tmp=tmp->next;
+	     ptr=tmp->next;
+	     tmp->next=NULL;
+	     free(ptr);
+	     printf("item deleted successfully");
+	     return;
+	   }
+	 void deletefirst(node **head)
+	 {
+	   node *ptr;
+	   if(head==NULL)
+	   {
+	   printf("empty list");
+	   return;
+	   }
+	   ptr=*head;
+	   *head=ptr->next;
+	   free(ptr);
+	   printf("first item deleted successfully");
+	   return;
+	 }
+
+	 void insertsorted(node **head,int v)
+	 {
+
+	 }
+	 void insertbefore(node **head,int v,int p)
+	 {
+	   node *ptr,*tmp;
+	   ptr=(node*)malloc(sizeof(node));
+	   if(ptr==NULL)
+	   { printf("memory not allocated");
+	      return;
+	    }
+	    ptr->item=v;
+	    tmp=*head;
+	    if(tmp->item==p)
+	    {
+	      ptr->next=*head;
+	      *head=ptr;
+	      printf("insert the value successfully");
+	      return;
+	     }
+	     while(tmp->next!=NULL && tmp->next->item!=p)
+	       tmp=tmp->next;
+	       if(tmp->next==NULL)
+	       {
+		 printf("data is not found");
+		 return;
+		}
+		ptr->next=tmp->next;
+		tmp->next=ptr;
+		printf("insert value successfully");
+		}
+	 void insertafter(node **head,int v,int p)
+	 { node *ptr,*tmp;
+	  ptr=(node*)malloc(sizeof(node));
+	 if(ptr==NULL)
+	 {
+	  printf("memory not allocated");
+	  return;
+	  }
+	  ptr->item=v;
+	  tmp=*head;
+	  while(tmp!=NULL && tmp->item!=p)
+	  tmp=tmp->next;
+	  if(tmp==NULL)
+	  { printf("value is not found");
+	      return;
+	     }
+	     ptr->next=tmp->next;
+	     tmp->next=ptr;
+	     printf("item inserted successfully");
+	     }
+	 void insertmiddle(node **head,int v,int p)
+	 {
+	     int c=1;
+	     node *ptr,*tmp;
+	     ptr=(node *)malloc(sizeof(node));
+	     if(ptr==NULL)
+	     {  printf("memory not allocated");
+	       return;
+	     }
+	     ptr->item=v;
+	     if(p==1)
+	     {
+		ptr->next=*head;
+		*head=ptr;
+		return;
+	      }
+	      tmp=*head;
+	      while(tmp->next !=NULL && c<p-1)
+	       {
+		 tmp=tmp->next;
+		 c++;
+		 }
+		 if(c<p-1 || *head==NULL)
+		 {
+		   printf("position not found");
+		   return;
+		 }
+		ptr->next=tmp->next;
+		tmp->next=ptr;
+		printf("item inserted successfully");
+	      }
+	      void insertlast(node **head,int v)
+	      {
+		 node *ptr,*tmp;
+		 ptr=(node *)malloc(sizeof(node));
+		 if(ptr==NULL)
+		 {
+		   printf("memory not allocated");
+		   return;
+		  }
+		  ptr->item=v;
+		  ptr->next=NULL;
+		  if(*head==NULL)
+		  {
+		     *head=ptr;
+		     return;
+		   }
+		   tmp=*head;
+		   while(tmp->next !=NULL)
+		      tmp=tmp->next;
+		      tmp->next=ptr;
+		      printf("item inserted successfully");
+		   }
+		void insertfirst(node **head,int v)
+		{
+		   node *ptr;
+		   ptr=(node *)malloc(sizeof(node));
+		   if(ptr==NULL)
+		   {
+		    printf("memory not allocated");
+		    return;
+		 }
+		 ptr->item=v;
+		 ptr->next=*head;
+		 *head=ptr;
+	       }
+	    void traverserev(node *head)
+	    {
+	       if(head->next !=NULL)
+	       traverserev(head->next);
+	       printf("    %d",head->item);
+	   }
+
+	    void traverse(node *head)
+	    {
+	       node *ptr;
+	       if(head==NULL)
+	       {
+		printf("empty list");
+		return;
+	      }
+	      ptr=head;
+	      printf("\n\n\t                         ");
+	      while(ptr!=NULL)
+	      { printf("   %d",ptr->item);
+	      ptr=ptr->next;
+	      }
+	   }
+
+
+
+
